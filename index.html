@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keyboard grid navigation</title>
+  <style>
+ 
+    ul, li {
+    
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    ul {
+      width: 450px;
+    margin: auto;
+    }
+    li {
+      float: left;
+    }
+    button {
+      display: block;
+      width: 140px;
+      height: 140px;
+      margin: 5px;
+      font-size: 20px;
+      background: red;
+      color: #fff;
+      border: none;
+    }
+    button:focus {
+      background: blue;
+      color: #000;
+    }
+    ul#inline {
+      margin: 0;
+      width: 100%;
+      clear: both;
+      padding: 2em 0;
+    }
+    #inline button {
+      background: #369;
+      border-radius: 0;
+      width: 10px;
+      height: 10px;
+    }
+    #inline button.current {
+      background: gold;
+    }
+
+
+  </style>
+
+</head>
+<body>
+
+<ul>
+  <li tabindex="1"><button>1</button></li>
+  <li tabindex="1"><button>2</button></li>
+  <li tabindex="1"><button>3</button></li>
+  <li tabindex="1"><button>4</button></li>
+  <li tabindex="1"><button>5</button></li>
+  <li tabindex="1"><button>6</button></li>
+  <li tabindex="1"><button>7</button></li>
+  <li tabindex="1"><button>8</button></li>
+  <li tabindex="1"><button>9</button></li>
+  
+</ul>
+
+<script>
+(function(){
+  var list = document.querySelector('ul');
+  var width = list.offsetWidth;
+  var itemwidth = list.firstElementChild.offsetWidth;
+  var addto = Math.floor(width / itemwidth);
+  var allbuttons = list.querySelectorAll('button');
+  var all = allbuttons.length;
+  var codes = {
+    40: addto, 
+    38: -addto,
+    39: 1,
+    37: -1
+  }
+  function getkey(ev) {
+    var current = ev.target;
+    for (var i = 0; i < all; i++) {
+      if (allbuttons[i] === current) {
+        break;
+      }
+    }
+    if (allbuttons[i + codes[ev.keyCode]]) {
+      allbuttons[i + codes[ev.keyCode]].focus();
+    }
+  }
+  list.addEventListener('keyup', getkey);
+})();
+</script>
+
+
+</body>
+</html>
